@@ -1,0 +1,46 @@
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mostrar info del runner
+        run: |
+          echo "Sistema:" $(uname -a)
+          echo "Branch: $GITHUB_REF"
+
+      - name: Crear scripts de ejemplo
+        run: |
+          echo '#!/usr/bin/env bash' > script.sh
+          echo 'echo "== Script de build =="; date' >> script.sh
+          chmod +x script.sh
+
+          echo '#!/usr/bin/env bash' > test.sh
+          echo 'echo "== Tests =="; test -f README.md && echo "OK: README.md existe" || (echo "FALTA README.md" && exit 1)' >> test.sh
+          chmod +x test.sh
+
+      - name: Ejecutar script principal
+        run: ./script.sh
+
+      - name: Ejecutar tests
+        run: ./test.sh
+
+      - name: Empaquetar y subir artefacto
+        run: |
+          mkdir -p out
+          echo "Reporte CI: $(date)" > out/reporte.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-ci
+          path: out/

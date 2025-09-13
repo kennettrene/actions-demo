@@ -1,0 +1,30 @@
+name: Manual Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      mensaje:
+        description: "Mensaje para imprimir"
+        required: true
+        default: "Hola desde workflow_dispatch 👋"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mostrar input
+        run: echo "Input recibido: ${{ github.event.inputs.mensaje }}"
+
+      - name: Usar un secreto (opcional)
+        env:
+          MI_TOKEN: ${{ secrets.MI_TOKEN_DEMO }}
+        run: |
+          if [ -z "$MI_TOKEN" ]; then
+            echo "No hay secreto configurado (MI_TOKEN_DEMO)."
+            exit 0
+          else
+            echo "Secreto presente (no se imprime)."
+          fi
