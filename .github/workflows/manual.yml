@@ -1,3 +1,4 @@
+# .github/workflows/manual.yml
 name: Manual Demo
 
 on:
@@ -16,4 +17,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Mostrar input
-        run: echo "Input recibido: ${{ github.event.inputs.mensaje }}"
+        shell: bash
+        run: |
+          echo "Input recibido: ${{ github.event.inputs.mensaje }}"
+
+      - name: Usar un secreto (opcional)
+        shell: bash
+        env:
+          MI_TOKEN: ${{ secrets.MI_TOKEN_DEMO }}
+        run: |
+          if [ -z "$MI_TOKEN" ]; then
+            echo "No hay secreto configurado (MI_TOKEN_DEMO)."
+          else
+            echo "Secreto presente (no se imprime por seguridad)."
+          fi
