@@ -1,4 +1,3 @@
-cat > .github/workflows/manual.yml <<'YAML'
 name: Manual Demo
 
 on:
@@ -18,8 +17,3 @@ jobs:
 
       - name: Mostrar input
         run: echo "Input recibido: ${{ github.event.inputs.mensaje }}"
-YAML
-
-git add .github/workflows/manual.yml
-git commit -m "fix: manual.yml YAML minimal válido"
-git push origin main
