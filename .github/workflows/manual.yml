@@ -1,4 +1,4 @@
-# .github/workflows/manual.yml
+cat > .github/workflows/manual.yml <<'YAML'
 name: Manual Demo
 
 on:
@@ -7,7 +7,7 @@ on:
       mensaje:
         description: "Mensaje para imprimir"
         required: true
-        default: "Hola desde workflow_dispatch 👋"
+        default: "Hola desde workflow_dispatch"
 
 jobs:
   run:
@@ -18,13 +18,8 @@ jobs:
 
       - name: Mostrar input
         run: echo "Input recibido: ${{ github.event.inputs.mensaje }}"
+YAML
 
-      - name: Usar un secreto (opcional)
-        env:
-          MI_TOKEN: ${{ secrets.MI_TOKEN_DEMO }}
-        run: |
-          if [ -z "$MI_TOKEN" ]; then
-            echo "No hay secreto configurado (MI_TOKEN_DEMO)."
-          else
-            echo "Secreto presente (no se imprime por seguridad)."
-          fi
+git add .github/workflows/manual.yml
+git commit -m "fix: manual.yml YAML minimal válido"
+git push origin main
