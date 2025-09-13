@@ -1,3 +1,4 @@
+# .github/workflows/manual.yml
 name: Manual Demo
 
 on:
@@ -24,7 +25,6 @@ jobs:
         run: |
           if [ -z "$MI_TOKEN" ]; then
             echo "No hay secreto configurado (MI_TOKEN_DEMO)."
-            exit 0
           else
-            echo "Secreto presente (no se imprime)."
+            echo "Secreto presente (no se imprime por seguridad)."
           fi
